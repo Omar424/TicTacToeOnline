@@ -1,0 +1,68 @@
+<!DOCTYP E html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/offline_tictactoe.css') }}">
+</head>
+<style>
+.cross {
+    background: url("{{ url_for('static', filename='img/cross.svg')}}") no-repeat top left;
+    background-size: contain;
+    width: 100px;
+    height: 100px;
+    
+}
+
+</style>
+
+<body>
+<div class="grid-container">
+    <header>Tic Tac Toe</header>
+    <aside id="aside">
+            <p>Robot: <span id="robot_score">0</span></p>
+            <br> 
+            <p>Du: <span id="du_score">0</span></p>
+            <p class="" id="spela_igen"></p>
+    </aside>
+    
+    <section id="section" class="game_over"></section>
+        <div class="main_div">
+                <div class="all_divs" id="t1">
+                        <div class="" id="tt1"></div>
+                </div>
+                <div class="all_divs" id="t2">
+                        <div class="" id="tt2"></div>
+                </div>
+                <div class="all_divs" id="t3">
+                        <div class="" id="tt3"></div>
+                </div>
+                <div class="all_divs" id="t4">
+                        <div class="" id="tt4"></div>
+                </div>
+                <div class="all_divs" id="t5">
+                        <div class="" id="tt5"></div>
+                </div>
+                <div class="all_divs" id="t6">
+                        <div class="" id="tt6"></div>
+                </div>
+                <div class="all_divs" id="t7">
+                        <div class="" id="tt7"></div>
+                </div>
+                <div class="all_divs" id="t8">
+                        <div class="" id="tt8"></div>
+                </div>
+                <div class="all_divs" id="t9">
+                        <div class="" id="tt9"></div>
+                </div>
+        </div>
+</div>
+
+<script src="{{url_for('static', filename='js/script_offline.js')}}"></script>
+</body>
+</html>
