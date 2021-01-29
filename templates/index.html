@@ -5,12 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - TicTacToe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
 <div class="grid_layout"> 
             <a id="spela" href="/offline"><span>Play Offline</span></a>
-            <a id="join" href="/join"><span>Join</span></a>
+            <a id="join" data-toggle="modal" data-target="#myModal" href="#"><span>Join</span></a>
             <a id="host" href="/host"><span>Host</span></a>   
 </div>
+
+<!-- Modal som är gömd men kommer visas när man trycker på join -->
+<div class="modal fade" id="myModal" role="dialog">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Join a server</h4>
+    </div>
+    <div class="modal-body">
+        <p>Enter the server code</p>
+        <input type="text" class="form-control" id="server_id" maxlength="4"
+        style="text-transform:uppercase" placeholder="Server code">
+        <p class="text-danger" id="server_code_error" style="display: none;">The server code must contain 4 characters</p>
+        <p class="text-danger" id="text_error" style="display: none;">ERROR</p>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default btn-success" id="join_button" onclick="button()">Join</button>
+    </div>
+    </div>
+    
+</div>
+</div>
+<script>
+
+function button() {
+    var join = document.getElementById("join_button");
+    var input = document.getElementById("server_id").value;
+    //error_text är en osynlig text som påpekar att du inte har skrivit in 4 tecken!
+    var error_text = document.getElementById("server_code_error");
+    //error_text3 är en osynlig text som visas om något har hänt
+    var error_text2 = document.getElementById("text_error");
+    
+
+    //Kollar om input har 4 tecken :D
+    if ( input.length != 4 ){
+        //Gör error texten synlig ("The server code must contain 4 characters")
+        error_text.style.display = "inline-block";
+    }
+    else{
+        //Om error texten är synlig så tar den bort den eftersom att man har skrivit in 4 tecken!
+        error_text.style.display = "none";
+        
+        //Skickar data till formulär
+        $.ajax({
+        url: '/join',
+        type: 'post',
+        dataType: 'json',
+        data: {"data": input},
+        success: function(data) {
+            if(data["success"]){
+                console.log("Joining...")
+                error_text2.style.display = "none";
+            }
+            else{
+                console.log("ERROR")
+                error_text2.style.display = "inline-block";
+
+            }
+                  
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("ERROR, Cant send request!");
+        }
+
+        });
+    }
+}
+    
+</script>
 </body>
 </html>
